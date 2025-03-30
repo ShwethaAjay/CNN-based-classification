@@ -32,6 +32,7 @@ In this version, the number of filters is increased, and an additional convoluti
 | MaxPool2D     | pool2 | (64, 10, 10) | (64, 5, 5)   | (2x2)        | -          | Stride 2       |
 | Conv2D        | conv3 | (64, 5, 5)   | (128, 3, 3)  | (3x3)        | ReLU       | Increased filters from 64 → 128 |
 | GlobalAvgPool2D | gap | (128, 3, 3)  | (128)        | -            | -          | Reduces dimensions |
+| Flatten       | -     | (64, 5, 5)   | (1600)       | -            | -          | Adjusted for increased filters |
 | Dense (FC)    | fc1   | (1600)       | (512)        | 512          | ReLU       | Increased neurons from 120 → 512 |
 | Dense (FC)    | fc2   | (512)        | (256)        | 256          | ReLU       | Increased neurons from 84 → 256 |
 | Dense (FC)    | fc3   | (256)        | (10)         | 10           | Softmax    | Output layer   |
@@ -46,8 +47,12 @@ This setup reduces kernel sizes to improve feature extraction efficiency.
 | Layer Type     | Name  | Input Shape  | Output Shape  | Kernel/Units | Activation | Additional Info |
 |---------------|-------|--------------|--------------|--------------|------------|----------------|
 | Conv2D        | conv1 | (3, 32, 32)  | (32, 30, 30) | (3x3)        | ReLU       | Reduced kernel from 5x5 → 3x3 |
+| MaxPool2D	    | pool1	| (32, 30, 30) | (32, 15, 15)	| (2x2)	       | -	        | Stride 2 |
 | Conv2D        | conv2 | (32, 15, 15) | (64, 13, 13) | (3x3)        | ReLU       | Reduced kernel from 5x5 → 3x3 |
+| MaxPool2D	    | pool2	| (64, 13, 13))| (64, 6, 6)	  | (2x2)	       | -	        | Stride 2 |
 | Conv2D        | conv3 | (64, 6, 6)   | (128, 4, 4)  | (3x3)        | ReLU       | Same kernel size, adjusted shape |
+| GlobalAvgPool2D| gap  | (128, 4, 4)  | (128)        | -            | -          | Reduces dimensions |
+| Flatten       | -     | (64, 6, 6)   | (2304)       | -            | -          | Adjusted for increased filters |
 | Dense (FC)    | fc1   | (2304)       | (512)        | 512          | ReLU       | Increased neurons from 120 → 512 |
 | Dense (FC)    | fc2   | (512)        | (256)        | 256          | ReLU       | Increased neurons from 84 → 256 |
 | Dense (FC)    | fc3   | (256)        | (10)         | 10           | Softmax    | Output layer   |
@@ -63,10 +68,16 @@ This version enhances stability and prevents overfitting.
 |---------------|-------|--------------|--------------|--------------|------------|----------------|
 | Conv2D        | conv1 | (3, 32, 32)  | (32, 28, 28) | (5x5)        | ReLU       | 32 filters |
 | BatchNorm2D   | bn1   | (32, 28, 28) | (32, 28, 28) | -            | -          | - |
+|MaxPool2D	|pool1	|(32, 28, 28)	|(32, 14, 14)	|(2x2)	|-	|Stride 2|
 | Conv2D        | conv2 | (32, 14, 14) | (64, 10, 10) | (5x5)        | ReLU       | Increased filters from 16 → 64 |
 | BatchNorm2D   | bn2   | (64, 10, 10) | (64, 10, 10) | -            | -          | - |
-| Dropout       | drop1 | (256)        | (256)        | -            | -          | Dropout 0.5 |
-| Dense (FC)    | fc3   | (256)        | (10)         | 10           | Softmax    | Output layer |
+|MaxPool2D	|pool2	|(64, 10, 10)	|(64, 5, 5)	|(2x2)	|-	|Stride 2|
+|Flatten	|-	|(64, 5, 5)	|(1600)	|-	|-	|Adjusted for increased filters|
+|Dense (FC)	|fc1	|(1600)	|(512)	|120	 |ReLU	|Increased neurons from 120 → 512|
+|Dropout	|drop1	|(256)	|(256)	|-	|-	|Dropout 0.5|
+|Dense (FC)	|fc2	|(512)	|(256)	|84	|ReLU	|Increased neurons from 84 → 256|
+|Dropout	|drop2	|(128)	|(128)	|-	|-	|Dropout 0.5|
+|Dense (FC)	|fc3	|(256)	|(10)	|10	|Softmax (implied)	|Output layer|
 
 **Visualizing Feature Maps**
 
