@@ -16,6 +16,10 @@ The original model is a simple CNN with two convolutional layers, followed by fu
 | Dense (FC)    | fc2   | (120)        | (84)         | 84           | ReLU       | -              |
 | Dense (FC)    | fc3   | (84)         | (10)         | 10           | Softmax    | Output layer   |
 
+**Visualizing Feature Maps**
+
+![Feature Maps](table/initial_featuremap.png) 
+
 
 ### Setup 1: Increasing Filters and Adding Layers
 In this version, the number of filters is increased, and an additional convolutional layer is introduced.
@@ -32,6 +36,10 @@ In this version, the number of filters is increased, and an additional convoluti
 | Dense (FC)    | fc2   | (512)        | (256)        | 256          | ReLU       | Increased neurons from 84 → 256 |
 | Dense (FC)    | fc3   | (256)        | (10)         | 10           | Softmax    | Output layer   |
 
+**Visualizing Feature Maps**
+
+![Feature Maps](table/featuremap1.png) 
+
 ### Setup 2: Modifying Kernel Sizes
 This setup reduces kernel sizes to improve feature extraction efficiency.
 
@@ -43,6 +51,11 @@ This setup reduces kernel sizes to improve feature extraction efficiency.
 | Dense (FC)    | fc1   | (2304)       | (512)        | 512          | ReLU       | Increased neurons from 120 → 512 |
 | Dense (FC)    | fc2   | (512)        | (256)        | 256          | ReLU       | Increased neurons from 84 → 256 |
 | Dense (FC)    | fc3   | (256)        | (10)         | 10           | Softmax    | Output layer   |
+
+**Visualizing Feature Maps**
+
+![Feature Maps](table/featuremap2.png) 
+
 ### Setup 3: Adding Batch Normalization & Dropout
 This version enhances stability and prevents overfitting.
 
@@ -54,6 +67,10 @@ This version enhances stability and prevents overfitting.
 | BatchNorm2D   | bn2   | (64, 10, 10) | (64, 10, 10) | -            | -          | - |
 | Dropout       | drop1 | (256)        | (256)        | -            | -          | Dropout 0.5 |
 | Dense (FC)    | fc3   | (256)        | (10)         | 10           | Softmax    | Output layer |
+
+**Visualizing Feature Maps**
+
+![Feature Maps](table/featuremap3.png) 
 
 ## Results
 
